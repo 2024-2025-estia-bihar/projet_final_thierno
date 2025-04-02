@@ -35,7 +35,7 @@ hourly_relative_humidity_2m = hourly.Variables(1).ValuesAsNumpy()
 
 # Création d'un DataFrame Pandas
 hourly_dataframe = pd.DataFrame({
-    "date": pd.date_range(
+    "date_time": pd.date_range(
         start=pd.to_datetime(hourly.Time(), unit="s", utc=True),
         end=pd.to_datetime(hourly.TimeEnd(), unit="s", utc=True),
         freq=pd.Timedelta(seconds=hourly.Interval()),
@@ -46,12 +46,12 @@ hourly_dataframe = pd.DataFrame({
 })
 
 # Agrégation par pas de 3 heures
-hourly_dataframe.set_index("date", inplace=True)
+hourly_dataframe.set_index("date_time", inplace=True)
 aggregated_data = hourly_dataframe.resample("3h").mean()
 aggregated_data.reset_index(inplace=True)
 
 # Insertion dans la base de données SQLite
-aggregated_data.to_sql("ts_meteo", conn, if_exists="append", index=False)
+aggregated_data.to_sql("weather_data", conn, if_exists="append", index=False)
 
 # Fermeture de la connexion
 conn.commit()
