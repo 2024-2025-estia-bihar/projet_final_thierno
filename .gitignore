@@ -1,3 +1,4 @@
 .qodo
 venv/
 data/ts_meteo.db
+model/registry
