@@ -30,7 +30,7 @@ jobs:
 
     - name: Run tests in container
       run: |
-        docker run --rm -v $(pwd)/data:/app/data ghcr.io/${{ secrets.GHCR_USERNAME }}/api-meteo:latest pytest tests/
+        docker run --rm -v $(pwd)/data:/app/data ghcr.io/${{ secrets.GHCR_USERNAME }}/api-meteo:latest pytest api/test_api.py
 
     - name: Push Docker image to GHCR
       run: |
