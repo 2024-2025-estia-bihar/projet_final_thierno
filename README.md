@@ -17,6 +17,8 @@ load_data.py
 train.py
 predictions.py
 api.py
+logger.py
+test_api.py
 
 # Domention des endpoints
 
@@ -39,6 +41,10 @@ Récupère toutes les prédictions présentes dans la base de données.
     3. GET /version
 Retourne la version actuelle du logiciel déployé.
     - Code HTTP 200 : Retourne la version de l'API sous forme de chaîne de caractères.
+
+    4. Test des endpoints
+
+Pour tester les endpoints en local, il faut aller dans projet_final_thierno/api dans le CLI et lancer la commande : pytest test_api.py
 
 # Déploiement de l’API météo avec Docker
     -   Construction de l’image Docker : Assurez-vous d’être à la racine du projet (projet_final_thierno/), puis exécutez : docker-compose build.
