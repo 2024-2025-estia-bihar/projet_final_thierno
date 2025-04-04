@@ -4,6 +4,7 @@ pandas==2.2.3
 scikit-learn==1.6.1
 seaborn==0.13.2
 numpy==2.2.4
-openmeteo-requests
-requests-cache
-retry-requests
+openmeteo-requests==1.4.0
+requests-cache==1.2.1
+retry-requests==2.0.0
+uvicorn==0.34.0
