@@ -4,3 +4,4 @@ data/ts_meteo.db
 model/registry
 __pycache__
 api/app.log
+.pytest_cache

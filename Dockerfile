@@ -15,6 +15,7 @@ COPY model/registry/ ./model/registry/
 COPY common.py ./common.py
 COPY requirements_api.txt ./requirements_api.txt
 COPY config.yml ./config.yml
+COPY tests/ ./tests/
 
 # Installer les dépendances
 RUN pip install --upgrade pip && \
