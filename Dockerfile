@@ -16,6 +16,7 @@ COPY common.py ./common.py
 COPY requirements_api.txt ./requirements_api.txt
 COPY config.yml ./config.yml
 COPY tests/ ./tests/
+COPY ./data /app/data
 
 # Installer les dépendances
 RUN pip install --upgrade pip && \

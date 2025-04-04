@@ -10,15 +10,6 @@ jobs:
   build-test-push:
     runs-on: ubuntu-latest
 
-    services:
-      db:
-        image: keinos/sqlite3 # image sqlite temporaire
-        volumes:
-          - ./data:/app/data
-        ports:
-          - 8000:8000
-        options: --entrypoint "sqlite3 /app/data/ts_meteo.db"
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
