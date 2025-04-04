@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  api-meteo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-meteo-container
+    ports:
+      - "8000:8000"
+    volumes:
+      - /home/ubuntu/projet_final_thierno/data/ts_meteo.db:/app/data/ts_meteo.db
+    restart: always

@@ -1,6 +1,11 @@
 # Utilise une image Python
 FROM python:3.10-slim
 
+# Installer sqlite3 CLI et dépendances
+RUN apt-get update && \
+    apt-get install -y sqlite3 && \
+    apt-get clean
+
 # Crée un répertoire de travail
 WORKDIR /app
 
