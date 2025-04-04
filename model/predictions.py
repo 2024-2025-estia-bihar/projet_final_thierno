@@ -27,7 +27,7 @@ model_id = model_id[0] if model_id else None
 query = """
 SELECT date_time, temperature, humidity
 FROM weather_data
-WHERE date_time BETWEEN '2025-03-23 12:00:00' AND '2025-03-25 21:00:00'
+WHERE date_time BETWEEN '2025-03-23 15:00:00' AND '2025-03-25 21:00:00'
 """
 data = pd.read_sql(query, conn, parse_dates=['date_time'])
 data.set_index('date_time', inplace=True)
