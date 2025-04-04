@@ -32,7 +32,7 @@ def get_prediction_by_date(date: str):
         if df_filtered.empty:
             logger.warning(f"Aucune prédiction à une heure valide pour la date {date}")
             raise HTTPException(
-                status_code=400,
+                status_code=404,
                 detail="Heure invalide. Utilisez l'une des heures suivantes: 00:00, 03:00, 06:00, 09:00, 12:00, 15:00, 18:00, 21:00"
             )
 
@@ -55,7 +55,7 @@ def get_all_predictions():
 
     except Exception as e:
         logger.error(f"Erreur lors de la récupération des prédictions : {e}")
-        raise HTTPException(status_code=500, detail="Erreur interne du serveur")
+        raise HTTPException(status_code=404, detail=f"Erreur lors de la récupération des prédictions : {e}")
     
 VERSION = "1.0.0"
 @app.get("/version", summary="Version actuelle de l'API", tags=["Infos"])
