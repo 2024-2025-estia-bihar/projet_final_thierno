@@ -17,7 +17,7 @@ jobs:
           - ./data:/app/data
         ports:
           - 8000:8000
-        options: --entrypoint ""
+        options: --entrypoint "sqlite3 /app/data/ts_meteo.db"
 
     steps:
     - name: Checkout repository
