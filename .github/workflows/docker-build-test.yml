@@ -17,7 +17,7 @@ jobs:
     - name: Set up SQLite database (copy from local to temporary dir)
       run: |
         mkdir -p ./data
-        cp /home/ubuntu/projet_final_thierno/data/ts_meteo.db ./data/ts_meteo.db
+        cp data/ts_meteo.db ./data/ts_meteo.db
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
