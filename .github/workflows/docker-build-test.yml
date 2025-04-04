@@ -6,7 +6,7 @@ jobs:
       db:
         image: nouchka/sqlite # image sqlite temporaire
         volumes:
-          - ./data:/app/data
+          - /data:/app/data
         ports:
           - 8000:8000
         options: --entrypoint ""
