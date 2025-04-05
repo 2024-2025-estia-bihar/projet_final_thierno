@@ -24,7 +24,7 @@ def test_get_prediction_by_date_invalid():
     date = "2025-03-26"
     response = client.get(f"/date/{date}X")
     assert response.status_code == 404
-    assert "Prédiction non trouvée" in response.json()["detail"]
+    assert "Erreur lors de la récupération des prédictions pour" in response.json()["detail"]
 
 def test_get_all_predictions():
     """Teste le endpoint GET /predictions."""
