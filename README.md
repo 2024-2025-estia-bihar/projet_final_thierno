@@ -1,54 +1,159 @@
-# < Project name >
-High-level description
+# Projet Final - API de Prédiction Météo
 
-Data flow & architecture
+Ce projet expose un modèle de machine learning sous forme d'API REST avec FastAPI.  
+Il permet de prédire des températures à différents moments d'une journée donnée à partir de données météo.
 
-Main technologies used and for which purpose
+---
 
-# Running locally
-Instructions to install dependencies, run, build, test
+## Data flow & Architecture
 
-# CI/CD steps
-Short description of each step with their outputs (if any)
+Le projet est structuré en plusieurs étapes pour gérer un pipeline complet de ML :
 
-db.py
-download.py
-load_data.py
-train.py
-predictions.py
-api.py
-logger.py
-test_api.py
+1. **Téléchargement et préparation des données** : `download.py` et `load_data.py`
+2. **Entraînement du modèle** : `train.py`
+3. **Prédiction périodique** : `predictions.py`
+4. **Stockage des résultats** : base de données SQLite (`ts_meteo.db`)
+5. **Exposition du modèle via une API** : `api.py` (FastAPI)
+6. **Logs et suivi des erreurs** : `logger.py`
+7. **Tests des endpoints** : `test_api.py`
 
-# Domention des endpoints
+---
 
-- url de base : http://localhost:8000
-- Endpoints :
+## Technologies principales
 
-    1. GET/date/{date}
+| Technologie     | Rôle                                  |
+|------------------|---------------------------------------|
+| Python           | Langage principal                     |
+| FastAPI          | Création de l'API REST                |
+| SQLite           | Base de données locale                |
+| Pandas           | Manipulation de données               |
+| PyYAML           | Chargement des fichiers de config     |
+| Uvicorn          | Serveur ASGI pour FastAPI             |
+| Docker           | Conteneurisation de l’application     |
+| GitHub Actions   | CI/CD automatisé                      |
+
+---
+
+## Lancer le projet en local
+
+### 1. Installation
+
+```bash
+git clone <repo-url>
+cd projet_final_thierno
+pip install -r requirements.txt
+```
+
+### 2. Lancement de l’API
+
+```bash
+uvicorn api:app --reload
+```
+
+L’API sera disponible à [http://localhost:8000](http://localhost:8000)
+
+---
+
+## Déploiement avec Docker
+
+- **Construction de l’image** :
+  ```bash
+  docker-compose build
+  ```
+
+- **Lancement du conteneur** :
+  ```bash
+  docker-compose up -d
+  ```
+
+- **Arrêt** :
+  ```bash
+  docker-compose down
+  ```
+
+---
+
+## CI/CD (GitHub Actions)
+
+| Étape CI/CD            | Description                                                      |
+|------------------------|------------------------------------------------------------------|
+| Build image Docker     | Construit l’image à partir du `Dockerfile`                      |
+| Push vers GHCR         | Envoie l’image sur `ghcr.io`                                    |
+| Run tests              | Exécute `pytest` dans le conteneur                              |
+| Deploy (optionnel)     | Déploiement automatique (si configuré)                          |
+
+---
+
+## Fichiers principaux
+
+| Fichier         | Description                                                                 |
+|------------------|----------------------------------------------------------------------------|
+| `db.py`          | Gestion de la base SQLite                                                  |
+| `download.py`    | Téléchargement initial des données                                         |
+| `load_data.py`   | Chargement des données au format pandas                                   |
+| `train.py`       | Entraînement et sauvegarde du modèle                                      |
+| `predictions.py` | Génération périodique des prédictions (batch)                             |
+| `api.py`         | Implémentation de l'API avec FastAPI                                      |
+| `logger.py`      | Logging personnalisé pour l'API                                            |
+| `test_api.py`    | Tests des endpoints API avec `pytest`                                     |
+
+---
+
+## Documentation des endpoints
+
+> URL de base : `http://localhost:8000`
+
+### 1. `GET /date/{date}`
 
 Récupère les prédictions pour une date donnée.
-date (chemin) : La date pour laquelle les prédictions doivent être récupérées. Le format attendu est YYYY-MM-DD.
-    - Code HTTP 200 : Si des prédictions sont trouvées pour la date donnée, l'API retourne une liste d'objets avec prediction_date_time et temperature_pred
-    - Code HTTP 404 : Si aucune prédiction n'est trouvée pour cette date.
 
-    2. GET/predictions
+- **Paramètre** : `date` au format `YYYY-MM-DD`
+- **Réponses** :
+  - `200 OK` : liste d'objets `{ prediction_date_time, temperature_pred }`
+  - `404 Not Found` : "Prédiction non trouvée"
 
-Récupère toutes les prédictions présentes dans la base de données.
-    - Code HTTP 200 : Si des prédictions sont présentes dans la base de données, l'API retourne une liste de toutes les prédictions disponibles.
-    - Code HTTP 404 : Si aucune prédiction n'est trouvée pour cette date.
+### 2. `GET /predictions`
 
-    3. GET /version
-Retourne la version actuelle du logiciel déployé.
-    - Code HTTP 200 : Retourne la version de l'API sous forme de chaîne de caractères.
+Récupère toutes les prédictions de la base.
 
-    4. Test des endpoints
+- **Réponses** :
+  - `200 OK` : liste complète des prédictions
+  - `404 Not Found` : si aucune donnée n'est disponible
 
-Pour tester les endpoints en local, il faut aller dans projet_final_thierno/api dans le CLI et lancer la commande : pytest test_api.py
+### 3. `GET /version`
 
-# Déploiement de l’API météo avec Docker
-    -   Construction de l’image Docker : Assurez-vous d’être à la racine du projet (projet_final_thierno/), puis exécutez : docker-compose build.
-Cela construit une image Docker contenant : Python 3.10, FastAPI, Uvicorn, Pandas, PyYAML et le fichier ts_meteo.db monté comme volume, le modèle et les fichiers de configuration.
-    -   Lancement du conteneur : docker-compose up -d
-    -   Arrêt : docker-compose down
-    -   Tester les endpoints
+Retourne la version actuelle du service.
+
+- **Réponse** :
+  - `200 OK` : version sous forme de chaîne (ex: `"v1.0.0"`)
+
+---
+
+## Tester les endpoints
+
+Depuis le dossier `projet_final_thierno/api` :
+
+```bash
+pytest test_api.py
+```
+
+---
+
+## Structure modulaire du code
+
+Ce projet respecte une **séparation claire des responsabilités** :
+
+- **Prétraitement** : découplé dans `load_data.py`
+- **Entraînement** : centralisé dans `train.py`
+- **Prédiction** : exécuté en batch avec `predictions.py`
+- **API** : FastAPI encapsule tout le pipeline (prétraitement + prédiction)
+- **Expérimentation/versionnement** : les modèles sont sauvegardés avec horodatage, facilitant le suivi
+
+---
+
+## Versionnement des modèles
+
+Chaque modèle entraîné est sauvegardé avec un nom incluant la date (`model_YYYYMMDD.pkl`) pour gérer le **versioning manuel**.  
+Un système d’amélioration pourrait consister à intégrer MLflow ou DVC pour automatiser cela.
+
+---
