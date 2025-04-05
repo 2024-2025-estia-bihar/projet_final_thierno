@@ -107,7 +107,7 @@ L’API sera disponible à [http://localhost:8000](http://localhost:8000)
 
 Récupère les prédictions pour une date donnée.
 
-- **Paramètre** : `date` au format `YYYY-MM-DD`
+- **Paramètre** : `date` au format `YYYY-MM-DD HH:mm`
 - **Réponses** :
   - `200 OK` : liste d'objets `{ prediction_date_time, temperature_pred }`
   - `404 Not Found` : "Prédiction non trouvée"
@@ -153,7 +153,7 @@ Ce projet respecte une **séparation claire des responsabilités** :
 
 ## Versionnement des modèles
 
-Chaque modèle entraîné est sauvegardé avec un nom incluant la date (`model_YYYYMMDD.pkl`) pour gérer le **versioning manuel**.  
+Chaque modèle entraîné est sauvegardé avec un nom et une version pour gérer le **versioning manuel**.  
 Un système d’amélioration pourrait consister à intégrer MLflow ou DVC pour automatiser cela.
 
 ---
