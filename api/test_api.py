@@ -21,7 +21,7 @@ def test_get_prediction_by_date_valid():
 
 def test_get_prediction_by_date_invalid():
     """Teste le endpoint GET /date/{date} pour une date invalide."""
-    date = "2025-03-26"
+    date = "2025-03-27"
     response = client.get(f"/date/{date}X")
     assert response.status_code == 404
     assert "Erreur lors de la récupération des prédictions pour" in response.json()["detail"]
