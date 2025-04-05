@@ -7,3 +7,4 @@ requests-cache==1.2.1
 retry-requests==2.0.0
 anyio==3.4.0
 starlette==0.26.1
+httpx==0.23.0
